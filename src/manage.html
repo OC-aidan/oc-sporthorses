@@ -1,0 +1,357 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Horse Manager · Oak Creek Sport Horses</title><link rel="icon" href="../favicon.png">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.topbar{background:var(--green);color:var(--cream);height:64px;display:flex;align-items:center}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center}
+.topbar img{height:34px;width:auto}
+.topbar nav{display:flex;gap:24px;font-size:14px;opacity:.9}
+.topbar nav .on{border-bottom:2px solid var(--gold);padding-bottom:3px}
+.demo{background:#FFF6C9;border-bottom:1px solid #E4CF6A;color:#5A4A08;font-size:13px;padding:8px 0}
+.layout{display:grid;grid-template-columns:1fr 330px;gap:30px;align-items:start;padding:10px 0 60px}
+.listbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:22px 0 8px}
+.listbar .tag{margin:0 8px 0 0}
+.list .item{display:inline-flex;gap:10px;align-items:center;padding:8px 12px;border-radius:999px;font-size:14px;cursor:pointer;border:1px solid transparent}
+.list .item:hover{background:var(--surf)} .list .item.on{background:var(--surf);border:1px solid var(--line)}
+.stepc{background:var(--surf);border:1px solid var(--line);border-radius:6px;padding:24px 26px;margin-bottom:18px}
+.stepc .h{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.stepc .n{width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--cream);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex:none}
+.stepc .h b{font-size:17px;font-weight:600}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 14px}
+.drop{border:2px dashed var(--gold);border-radius:10px;padding:24px;text-align:center;background:#FBF6EA;cursor:pointer;display:block}
+.drop:hover{background:#F6EEDA}
+.linkbox{border:1px solid var(--line);border-radius:10px;padding:16px}
+.vrow{display:grid;grid-template-columns:110px 1fr 150px auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.vrow .ph{--ar:16/10}
+.vrow input,.vrow select{padding:8px 10px;font-size:13.5px}
+.vrow .acts{display:flex;flex-direction:column;gap:4px;font-size:12.5px;text-align:right}
+.vrow .cover{color:var(--muted)} .vrow .cover.on{color:var(--gold-ink);font-weight:600}
+.pill{display:inline-block;padding:7px 13px;border-radius:999px;border:1px solid var(--line);margin:0 6px 6px 0;font-size:13px;cursor:pointer;user-select:none;color:var(--muted)}
+.pill.on{background:var(--green);color:var(--cream);border-color:var(--green)}
+.cbx{display:flex;gap:10px;align-items:center;font-size:14px;padding:5px 0;cursor:pointer}
+.cbx input{width:18px;height:18px;accent-color:var(--green)}
+.radio{display:flex;gap:10px;align-items:center;font-size:14px;padding:5px 0;cursor:pointer}
+.radio input{width:18px;height:18px;accent-color:var(--green)}
+.side{position:sticky;top:16px}
+.tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
+.check{background:#FBF6EA;border:1px solid #EADFC4;border-radius:6px;padding:14px 16px;margin-top:14px;font-size:13.5px;line-height:1.9}
+.check .no{color:var(--muted)}
+.fbpost{border:1px solid #e4e6eb;border-radius:8px;overflow:hidden;font-family:system-ui,sans-serif;background:#fff;margin-top:14px}
+.fbpost .top{display:flex;gap:10px;align-items:center;padding:12px}
+.fbpost .av{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center}
+.fbpost .lk{background:#f0f2f5;padding:10px 12px;font-size:13px}
+#hlist{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.side{position:static}.topbar nav{display:none}}
+@media(max-width:620px){.g3{grid-template-columns:1fr}.vrow{grid-template-columns:90px 1fr}.vrow select,.vrow .acts{grid-column:2}.two{grid-template-columns:1fr}}
+.login{max-width:520px;margin:60px auto;background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:34px}
+.status{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:var(--cream);padding:12px 20px;border-radius:999px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);display:none;z-index:60;max-width:90vw}
+.status.show{display:block}.status.err{background:#9B3B2E;color:#fff}
+.prog{height:4px;background:var(--line);border-radius:2px;margin-top:6px;overflow:hidden}.prog i{display:block;height:100%;background:var(--gold);width:0}
+.photo{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.danger{color:#9B3B2E;font-size:13px;margin-top:14px;display:inline-block}
+@media(max-width:620px){.photo{grid-template-columns:1fr}}
+</style></head><body>
+<div class="topbar"><div class="wrap"><div style="display:flex;align-items:center;gap:14px"><a href="../"><img src="../assets/img/logo-gold.png" alt="Oak Creek"></a><span style="opacity:.5">|</span><span style="font-size:14px;letter-spacing:.04em">Horse Manager</span></div>
+<nav><a href="../" target="_blank">View site ↗</a><a href="#" id="signout" style="display:none">Sign out</a></nav></div></div>
+
+<!-- Sign-in -->
+<div id="loginView" class="wrap" style="display:none"><div class="login"><h1 style="font-size:34px">Horse Manager</h1><p class="muted" style="margin-top:6px">Sign in with your site key to add and edit horses.</p>
+<label class="f">Site key</label><input id="keyIn" type="password" placeholder="github_pat_…" autocomplete="current-password">
+<label class="cbx" style="margin-top:10px"><input type="checkbox" id="remember" checked>Keep me signed in on this device</label>
+<button class="btn b1 full" style="margin-top:16px" id="loginBtn">Sign in</button><div id="loginErr" style="color:#9B3B2E;font-size:13.5px;margin-top:10px"></div>
+<p class="muted" style="font-size:12.5px;margin-top:18px">Your site key lets this page save listings to your website. It stays on this device only. Lost it? Ask for a new one; the old one can be switched off.</p></div></div>
+
+<!-- Editor -->
+<div id="appView" style="display:none">
+<div class="wrap listbar list"><div class="tag">Your horses</div><div id="hlist"></div><button class="btn b1" style="padding:9px 16px" id="newBtn">+ List a new horse</button></div>
+<div class="wrap layout">
+<div>
+<div style="margin-bottom:18px"><h1 style="font-size:38px" id="formTitle">List a horse</h1><div class="muted">Fill in the form and press Publish. The sale page, homepage card and Facebook post build themselves.</div></div>
+
+<div class="stepc"><div class="h"><span class="n">1</span><div><b>Videos</b><div class="muted" style="font-size:13px">Paste a Vimeo link (best for riding videos) or upload a short clip from your phone.</div></div></div>
+<div class="two" style="margin-top:0">
+<div class="linkbox"><b style="font-weight:600;font-size:14px">Paste a Vimeo link</b><input id="vlink" placeholder="https://vimeo.com/123456789" style="margin-top:8px">
+<div class="btnrow"><button class="btn b1" style="padding:9px 14px" id="addLink">Add video</button><a class="btn b2" style="padding:9px 14px;color:var(--green)" href="https://vimeo.com/upload" target="_blank" rel="noopener">Upload to Vimeo ↗</a></div>
+<div class="muted" style="font-size:12px;margin-top:8px">On Vimeo, set privacy to <b>Unlisted</b> or <b>Hide from Vimeo</b> and allow embedding, then copy the link here.</div></div>
+<label class="drop"><input type="file" id="vfile" accept="video/mp4,video/quicktime,video/*" multiple hidden><div style="font-size:24px;color:var(--gold)">⬆</div><b style="font-weight:600">Upload a clip from your phone</b><div class="muted" style="font-size:12.5px;margin-top:4px">MP4 or MOV, up to 24 MB (about 20–40 seconds). Longer videos go on Vimeo.</div></label></div>
+<div id="vrows" style="margin-top:14px"></div></div>
+
+<div class="stepc"><div class="h"><span class="n">2</span><div><b>The horse</b><div class="muted" style="font-size:13px">The basics buyers look for first.</div></div></div>
+<div class="photo"><div class="ph" id="photoPrev" style="--ar:4/3"></div><div><b style="font-weight:600;font-size:14px">Main photo</b><div class="muted" style="font-size:12.5px">Side-on, standing square. Used on cards and Facebook link previews.</div>
+<label class="btn b2" style="margin-top:10px;padding:9px 14px;color:var(--green);cursor:pointer"><input type="file" id="pfile" accept="image/*" hidden>Upload photo</label><div class="prog" id="pprog" style="display:none"><i></i></div></div></div>
+<div class="g3" style="margin-top:6px"><div><label class="f">Barn name</label><input data-k="name"></div><div><label class="f">Year foaled</label><input data-k="year" type="number"></div>
+<div><label class="f">Sex</label><select data-k="sex"><option>Gelding</option><option>Mare</option><option>Stallion</option><option>Filly</option><option>Colt</option></select></div>
+<div><label class="f">Breeding</label><select data-k="breeding"><option>½ Clydesdale · ½ Thoroughbred</option><option>¼ Clydesdale · ¾ Thoroughbred</option><option>¾ Clydesdale · ¼ Thoroughbred</option><option>Clydesdale</option><option>Thoroughbred</option></select></div>
+<div><label class="f">Height now</label><input data-k="height" placeholder="15.3 hh"></div><div><label class="f">Expected mature height</label><input data-k="mature_height" placeholder="~16.2 hh"></div>
+<div><label class="f">Sire</label><input data-k="sire"></div><div><label class="f">Dam</label><input data-k="dam"></div><div><label class="f">Time under saddle</label><input data-k="training_time" placeholder="4 months riding"></div></div>
+<label class="f">Disciplines</label><div id="disc"></div></div>
+
+<div class="stepc"><div class="h"><span class="n">3</span><div><b>Training &amp; story</b><div class="muted" style="font-size:13px">Tick what the horse has done, then write a few lines in your own voice.</div></div></div>
+<div class="g3" id="train"></div><div style="display:flex;gap:8px;margin-top:8px"><input id="ownTrain" placeholder="Add your own (e.g. Hacks out alone)" style="max-width:320px"><button class="btn b2" style="padding:8px 14px;color:var(--green)" id="addTrain">Add</button></div>
+<label class="f">One-line summary (shown on cards and Facebook)</label><input data-k="summary">
+<label class="f">About this horse</label><textarea data-k="notes" rows="4"></textarea></div>
+
+<div class="stepc"><div class="h"><span class="n">4</span><div><b>Price &amp; status</b><div class="muted" style="font-size:13px">Set the price, how it shows, and where the listing appears.</div></div></div>
+<div class="two" style="margin-top:0;gap:24px"><div><label class="f" style="margin-top:0">Asking price</label><input data-k="price" type="number" placeholder="15000">
+<div style="display:flex;gap:6px;margin-top:10px" id="cur"></div><div id="maxwrap" style="display:none"><label class="f">Up to (for a range)</label><input data-k="price_max" type="number"></div></div>
+<div><label class="f" style="margin-top:0">How to show the price</label>
+<label class="radio"><input type="radio" name="pd" value="price">Show the price</label><label class="radio"><input type="radio" name="pd" value="range">Show a range</label><label class="radio"><input type="radio" name="pd" value="request">Hide it: "Price on request"</label></div></div>
+<label class="f">Status</label><div id="status"></div>
+<label class="cbx"><input type="checkbox" data-k="featured">Feature on the homepage</label>
+<a href="#" class="danger" id="delBtn">Delete this listing</a></div>
+</div>
+
+<div class="side"><div class="tag">Live preview</div><div id="preview"></div>
+<button class="btn b1 full" style="margin-top:16px;padding:15px" id="pub">Publish to website</button>
+<button class="btn b2 full" style="margin-top:10px;color:var(--green)" id="fbBtn">Create Facebook post →</button>
+<button class="btn full" style="margin-top:6px;color:var(--muted)" id="saveBtn">Save as draft (hidden)</button>
+<div class="check" id="checklist"></div>
+<p class="muted" style="font-size:12px;margin-top:12px">Published changes appear on the website in about 1–2 minutes.</p></div>
+</div></div>
+
+<div class="modal" id="modal"><div class="box"><button class="x" onclick="closeM()">×</button><div id="mbody"></div></div></div>
+<div class="status" id="toast"></div>
+
+<script>
+var REPO = '{{REPO}}', BRANCH = '{{BRANCH}}', API = 'https://api.github.com/repos/' + REPO + '/contents/';
+var MAX_UPLOAD = 24 * 1024 * 1024;
+var DISC = ['English','Western','Trail','Hunter','Dressage','Jumping','Eventing','Driving'];
+var TRAIN = ['Trail riding','Water crossings','Horse show exposure','English & Western riding','Loads & ties','Good for farrier','Clipped','Ponied','Bathes','Hacks out alone','Started over fences','Kid safe'];
+var CHAP = ['Under saddle','Trail & water','Conformation','Ground work','Turnout','Other'];
+var ST = {available:'Available','under-offer':'Under offer',sold:'Sold → moves to Graduates',draft:'Draft (hidden)'};
+var KEY = '', all = [], fileSha = null, cur = null, dirty = false;
+
+function $(s) { return document.querySelector(s); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function slug(n) { return (n || 'horse').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'horse'; }
+function vimeo(u) { var m = (u || '').match(/vimeo\.com\/(?:.*?\/)?(?:video\/)?(\d{6,})(?:\/([0-9a-f]{6,}))?(?:\?h=([0-9a-f]+))?/i); return m ? {id:m[1], h:m[2] || m[3] || ''} : null; }
+function yt(u) { var m = (u || '').match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/); return m ? m[1] : ''; }
+function money(h) { if (h.price_display === 'request' || !h.price) return 'Price on request'; var s = '$' + Number(h.price).toLocaleString(); if (h.price_display === 'range' && h.price_max) s += ' to $' + Number(h.price_max).toLocaleString(); return s; }
+function media(p) { return !p ? '' : /^(https?:|blob:|data:)/.test(p) ? p : '../' + p; }
+var SCENE = '<svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice"><rect width="1200" height="600" fill="#DCE2D3"/><path d="M0 300 C200 240 380 260 600 280 S1000 230 1200 270 V600 H0Z" fill="#7E9478"/><path d="M0 380 C260 330 520 350 760 372 S1060 340 1200 360 V600 H0Z" fill="#4E6B52"/><path d="M0 445 C300 410 700 430 1200 405" stroke="#2F4A37" stroke-width="5" fill="none"/><path d="M0 500 C300 480 800 500 1200 470 V600 H0Z" fill="#2F4A37" opacity=".55"/></svg>';
+function vthumb(v) {
+  if (v.local) return '<video src="' + v.local + '" muted playsinline preload="metadata"></video>';
+  if (v.thumb) return '<img src="' + esc(v.thumb) + '">';
+  if (yt(v.youtube)) return '<img src="https://img.youtube.com/vi/' + yt(v.youtube) + '/hqdefault.jpg">';
+  if (v.src) return '<video src="' + media(v.src) + '" muted playsinline preload="metadata"></video>';
+  return SCENE;
+}
+function toast(msg, err, ms) { var t = $('#toast'); t.textContent = msg; t.className = 'status show' + (err ? ' err' : ''); clearTimeout(t._h); if (ms !== 0) t._h = setTimeout(function () { t.className = 'status'; }, ms || 3500); }
+
+// ---------- GitHub storage ----------
+function gh(path, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({Authorization: 'Bearer ' + KEY, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}, opts.headers || {});
+  return fetch(API + path + (opts.method ? '' : (path.indexOf('?') < 0 ? '?' : '&') + 'ref=' + BRANCH), opts).then(function (r) {
+    if (r.status === 401 || r.status === 403) throw new Error('auth');
+    if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error(j.message || ('HTTP ' + r.status)); e.status = r.status; throw e; });
+    return r.json();
+  });
+}
+function b64utf8(s) { var b = new TextEncoder().encode(s), out = ''; for (var i = 0; i < b.length; i += 0x8000) out += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(out); }
+function utf8b64(s) { var bin = atob(s.replace(/\n/g, '')), b = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); return new TextDecoder().decode(b); }
+function loadHorses() {
+  return gh('content/horses.json').then(function (j) { fileSha = j.sha; all = JSON.parse(utf8b64(j.content)); });
+}
+function saveHorses(msg) {
+  var clean = all.map(function (h) { var c = JSON.parse(JSON.stringify(h)); (c.videos || []).forEach(function (v) { delete v.local; delete v.uploading; }); delete c._new; delete c._photoLocal; return c; });
+  var body = JSON.stringify({message: msg, content: b64utf8(JSON.stringify(clean, null, 2) + '\n'), sha: fileSha, branch: BRANCH});
+  return gh('content/horses.json', {method: 'PUT', body: body}).then(function (j) { fileSha = j.content.sha; dirty = false; }, function (e) {
+    if (e.status === 409 || e.status === 422) { // someone else saved: refresh sha and retry once
+      return gh('content/horses.json').then(function (j) { fileSha = j.sha; body = JSON.stringify({message: msg, content: b64utf8(JSON.stringify(clean, null, 2) + '\n'), sha: fileSha, branch: BRANCH}); return gh('content/horses.json', {method: 'PUT', body: body}); }).then(function (j) { fileSha = j.content.sha; dirty = false; });
+    }
+    throw e;
+  });
+}
+function uploadFile(blob, name, onprog) {
+  var path = 'assets/uploads/' + name;
+  return new Promise(function (res, rej) {
+    var fr = new FileReader();
+    fr.onprogress = function (e) { if (e.lengthComputable && onprog) onprog(e.loaded / e.total * 0.4); };
+    fr.onload = function () {
+      var b64 = String(fr.result).split(',')[1];
+      if (onprog) onprog(0.5);
+      gh(path, {method: 'PUT', body: JSON.stringify({message: 'Upload ' + name, content: b64, branch: BRANCH})}).then(function () { if (onprog) onprog(1); res(path); }, rej);
+    };
+    fr.onerror = rej; fr.readAsDataURL(blob);
+  });
+}
+function shrinkImage(file) {
+  return new Promise(function (res) {
+    var img = new Image(); img.onload = function () {
+      var s = Math.min(1, 2000 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob(function (b) { res(b || file); }, 'image/jpeg', 0.82);
+    }; img.onerror = function () { res(file); }; img.src = URL.createObjectURL(file);
+  });
+}
+function stamp() { var d = new Date(); return d.toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.random().toString(36).slice(2, 6); }
+
+// ---------- sign in ----------
+function showLogin(msg) { $('#loginView').style.display = ''; $('#appView').style.display = 'none'; $('#signout').style.display = 'none'; $('#loginErr').textContent = msg || ''; }
+function start() {
+  toast('Loading your horses…', false, 0);
+  return loadHorses().then(function () {
+    $('#loginView').style.display = 'none'; $('#appView').style.display = ''; $('#signout').style.display = '';
+    toast('Signed in ✓'); load(all[0] || newHorse());
+  }, function (e) {
+    $('#toast').className = 'status';
+    try { localStorage.removeItem('oc-key'); sessionStorage.removeItem('oc-key'); } catch (x) {}
+    showLogin(e.message === 'auth' ? 'That key didn\'t work. Check it and try again.' : 'Couldn\'t reach your site storage (' + e.message + ').');
+  });
+}
+$('#loginBtn').onclick = function () {
+  KEY = $('#keyIn').value.trim(); if (!KEY) return;
+  try { ($('#remember').checked ? localStorage : sessionStorage).setItem('oc-key', KEY); } catch (x) {}
+  start();
+};
+$('#keyIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#loginBtn').click(); });
+$('#signout').onclick = function (e) { e.preventDefault(); try { localStorage.removeItem('oc-key'); sessionStorage.removeItem('oc-key'); } catch (x) {} KEY = ''; showLogin(); };
+
+// ---------- editor ----------
+function newHorse() { return {slug:'', name:'', year:new Date().getFullYear() - 2, sex:'Gelding', breeding:'½ Clydesdale · ½ Thoroughbred', height:'', mature_height:'', training_time:'', disciplines:[], price:'', currency:'CAD', price_display:'price', status:'draft', featured:true, summary:'', notes:'', training:[], sire:'', dam:'', photo:'', videos:[], _new:true}; }
+function stLabel(h) { return h.status === 'draft' ? 'Draft' : h.status === 'under-offer' ? 'Under offer' : h.status === 'sold' ? 'Sold' : 'Available'; }
+function renderList() {
+  $('#hlist').innerHTML = all.map(function (h, i) { return '<div class="item' + (cur === h ? ' on' : '') + '" data-i="' + i + '"><span>' + esc(h.name || 'New horse') + '</span><span class="chip st-' + (h.status === 'draft' ? 'sold' : h.status) + '" style="font-size:10.5px">' + stLabel(h) + '</span></div>'; }).join('');
+  document.querySelectorAll('#hlist .item').forEach(function (el) { el.onclick = function () { load(all[+el.dataset.i]); }; });
+}
+function load(h) {
+  if (all.indexOf(h) < 0) all.push(h);
+  cur = h; renderList();
+  $('#formTitle').textContent = h.name ? h.name : 'List a new horse';
+  document.querySelectorAll('[data-k]').forEach(function (el) { var k = el.dataset.k; if (el.type === 'checkbox') el.checked = !!h[k]; else el.value = h[k] == null ? '' : h[k]; });
+  document.querySelectorAll('input[name=pd]').forEach(function (r) { r.checked = r.value === (h.price_display || 'price'); });
+  h.disciplines = h.disciplines || []; h.training = h.training || []; h.videos = h.videos || [];
+  pills('#disc', DISC, function () { return cur.disciplines; }, function (x) { toggle(cur.disciplines, x); });
+  pills('#cur', ['CAD', 'USD'], function () { return [cur.currency]; }, function (x) { cur.currency = x; });
+  pills('#status', Object.keys(ST), function () { return [cur.status]; }, function (x) { cur.status = x; }, ST);
+  renderTrain(); renderVideos(); renderPhoto(); update();
+}
+function toggle(arr, x) { var i = arr.indexOf(x); i < 0 ? arr.push(x) : arr.splice(i, 1); }
+function pills(sel, opts, onFn, fn, labels) {
+  var box = $(sel), on = onFn();
+  box.innerHTML = opts.map(function (o) { return '<span class="pill' + (on.indexOf(o) >= 0 ? ' on' : '') + '" data-v="' + esc(o) + '">' + esc(labels ? labels[o] : o) + '</span>'; }).join('');
+  box.querySelectorAll('.pill').forEach(function (p) { p.onclick = function () { fn(p.dataset.v); dirty = true; pills(sel, opts, onFn, fn, labels); update(); renderList(); }; });
+}
+function renderTrain() {
+  var opts = TRAIN.slice(); cur.training.forEach(function (t) { if (opts.indexOf(t) < 0) opts.push(t); });
+  $('#train').innerHTML = opts.map(function (t) { return '<label class="cbx"><input type="checkbox" ' + (cur.training.indexOf(t) >= 0 ? 'checked' : '') + ' data-t="' + esc(t) + '">' + esc(t) + '</label>'; }).join('');
+  document.querySelectorAll('#train input').forEach(function (c) { c.onchange = function () { toggle(cur.training, c.dataset.t); dirty = true; update(); }; });
+}
+function photoSrc(h) { return h._photoLocal || media(h.photo); }
+function renderPhoto() { $('#photoPrev').innerHTML = cur.photo ? '<img src="' + esc(photoSrc(cur)) + '" alt="">' : SCENE + '<span class="lab">No photo yet</span>'; }
+function renderVideos() {
+  var vs = cur.videos;
+  $('#vrows').innerHTML = vs.length ? vs.map(function (v, i) {
+    var src = v.uploading ? 'Uploading… ' + Math.round(v.uploading * 100) + '%' : vimeo(v.vimeo) ? 'Vimeo' : yt(v.youtube) ? 'YouTube' : v.src ? 'Uploaded clip' : 'No video yet (sample)';
+    return '<div class="vrow" data-i="' + i + '"><div class="ph">' + vthumb(v) + '<span class="play sm" style="width:30px;height:30px"></span></div>' +
+      '<div><input value="' + esc(v.title) + '" data-f="title" placeholder="What does this video show?"><div class="muted" style="font-size:12px;margin-top:4px">' + esc(v.duration ? v.duration + ' · ' : '') + src + '</div>' + (v.uploading ? '<div class="prog"><i style="width:' + Math.round(v.uploading * 100) + '%"></i></div>' : '') + '</div>' +
+      '<select data-f="chapter">' + CHAP.map(function (c) { return '<option' + (c === v.chapter ? ' selected' : '') + '>' + c + '</option>'; }).join('') + '</select>' +
+      '<div class="acts"><span class="cover' + (i === 0 ? ' on' : '') + '" data-a="cover" style="cursor:pointer">' + (i === 0 ? '★ Plays first' : 'Make first') + '</span><span data-a="rm" style="cursor:pointer;color:#9B3B2E">Remove</span></div></div>';
+  }).join('') + '<div class="muted" style="font-size:12.5px;margin-top:10px">The first video plays first on the sale page. Chapters become the tabs buyers click.</div>' : '<div class="muted" style="font-size:13.5px">No videos yet. Add at least one riding video.</div>';
+  document.querySelectorAll('.vrow').forEach(function (r) {
+    var i = +r.dataset.i;
+    r.querySelectorAll('[data-f]').forEach(function (el) { el.oninput = el.onchange = function () { vs[i][el.dataset.f] = el.value; dirty = true; update(); }; });
+    r.querySelector('[data-a=cover]').onclick = function () { vs.unshift(vs.splice(i, 1)[0]); dirty = true; renderVideos(); update(); };
+    r.querySelector('[data-a=rm]').onclick = function () { vs.splice(i, 1); dirty = true; renderVideos(); update(); };
+  });
+}
+function ensureSlug() { if (!cur.slug) { var s = slug(cur.name), n = 2, base = s; while (all.some(function (h) { return h !== cur && h.slug === s; })) s = base + '-' + n++; cur.slug = s; } return cur.slug; }
+
+$('#addLink').onclick = function () {
+  var u = $('#vlink').value.trim(); if (!u) return;
+  var vm = vimeo(u), v = {chapter:'Under saddle', title:'', duration:'', vimeo:'', youtube:'', src:'', thumb:''};
+  if (vm) v.vimeo = u; else if (yt(u)) v.youtube = u; else { toast('Paste a Vimeo link, like https://vimeo.com/123456789', true); return; }
+  cur.videos.push(v); dirty = true; $('#vlink').value = ''; renderVideos(); update();
+  if (vm) fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(u)).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+    if (!j) { toast('Added. Vimeo didn\'t share a thumbnail. Check the video allows embedding.', true, 6000); return; }
+    v.thumb = j.thumbnail_url ? j.thumbnail_url.replace(/_\d+x\d+/, '_960x540').replace(/-d_\d+x\d+/, '-d_960x540') : ''; if (!v.title) v.title = j.title || '';
+    if (j.duration) v.duration = Math.floor(j.duration / 60) + ':' + ('0' + j.duration % 60).slice(-2);
+    renderVideos(); update();
+  }).catch(function () {});
+};
+$('#vfile').onchange = function (ev) {
+  var files = Array.prototype.slice.call(ev.target.files); ev.target.value = '';
+  files.forEach(function (f) {
+    if (f.size > MAX_UPLOAD) { toast('"' + f.name + '" is ' + Math.round(f.size / 1048576) + ' MB. Clips must be under 24 MB. Put longer videos on Vimeo and paste the link.', true, 8000); return; }
+    var ext = (f.name.match(/\.(\w+)$/) || [, 'mp4'])[1].toLowerCase(), v = {chapter:'Under saddle', title:f.name.replace(/\.[^.]+$/, ''), duration:'', src:'', vimeo:'', youtube:'', thumb:'', local:URL.createObjectURL(f), uploading:0.01};
+    var t = document.createElement('video'); t.preload = 'metadata'; t.src = v.local; t.onloadedmetadata = function () { var s = Math.round(t.duration); if (s) { v.duration = Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); renderVideos(); } };
+    cur.videos.push(v); dirty = true; renderVideos(); update();
+    uploadFile(f, slug(cur.name || 'horse') + '-' + stamp() + '.' + ext, function (p) { v.uploading = p; renderVideos(); }).then(function (path) {
+      v.src = path; delete v.uploading; renderVideos(); update(); toast('Clip uploaded ✓ Press Publish to put it on the site.');
+    }, function (e) { cur.videos.splice(cur.videos.indexOf(v), 1); renderVideos(); toast('Upload failed: ' + e.message, true, 6000); });
+  });
+};
+$('#pfile').onchange = function (ev) {
+  var f = ev.target.files[0]; ev.target.value = ''; if (!f) return;
+  var bar = $('#pprog'); bar.style.display = ''; bar.firstChild.style.width = '10%';
+  shrinkImage(f).then(function (b) {
+    $('#photoPrev').innerHTML = '<img src="' + URL.createObjectURL(b) + '">';
+    return uploadFile(b, slug(cur.name || 'horse') + '-' + stamp() + '.jpg', function (p) { bar.firstChild.style.width = Math.round(p * 100) + '%'; });
+  }).then(function (path) { cur.photo = path; cur._photoLocal = $('#photoPrev img') ? $('#photoPrev img').src : ''; dirty = true; bar.style.display = 'none'; update(); toast('Photo uploaded ✓ Press Publish to put it on the site.'); },
+    function (e) { bar.style.display = 'none'; renderPhoto(); toast('Photo upload failed: ' + e.message, true, 6000); });
+};
+$('#addTrain').onclick = function () { var t = $('#ownTrain').value.trim(); if (t && cur.training.indexOf(t) < 0) { cur.training.push(t); $('#ownTrain').value = ''; dirty = true; renderTrain(); update(); } };
+document.querySelectorAll('[data-k]').forEach(function (el) {
+  var h = function () { var k = el.dataset.k; cur[k] = el.type === 'checkbox' ? el.checked : el.type === 'number' ? (el.value === '' ? '' : Number(el.value)) : el.value; dirty = true; if (k === 'name') { $('#formTitle').textContent = cur.name || 'List a new horse'; renderList(); } update(); };
+  el.addEventListener('input', h); el.addEventListener('change', h);
+});
+document.querySelectorAll('input[name=pd]').forEach(function (r) { r.onchange = function () { cur.price_display = r.value; dirty = true; update(); }; });
+
+function update() {
+  var h = cur, nv = h.videos.length, v0 = h.videos[0] || {};
+  $('#maxwrap').style.display = h.price_display === 'range' ? '' : 'none';
+  var st = h.status === 'draft' ? 'sold' : h.status;
+  var top = h.photo ? '<img src="' + esc(photoSrc(h)) + '">' : vthumb(v0);
+  $('#preview').innerHTML = '<div class="card"><div class="ph" style="--ar:16/10;border-radius:0">' + top + '<span class="play sm"></span><span class="lab">▶ ' + nv + ' video' + (nv === 1 ? '' : 's') + '</span></div><div class="body"><div class="row-top"><span class="chip st-' + st + '">' + stLabel(h) + '</span>' + (h.featured ? '<span class="sample">★ Homepage</span>' : '') + '</div>' +
+    '<h3>' + esc(h.name || 'Horse name') + '</h3><div class="meta">' + esc((h.year || '') + ' ' + h.sex + ' · ' + h.breeding + (h.height ? ' · ' + h.height : '')) + '</div><div class="spacer"></div><div class="foot"><span class="price">' + money(h) + (h.price && h.price_display !== 'request' ? ' <span class="muted" style="font-size:12px;font-weight:400">' + h.currency + '</span>' : '') + '</span><span class="link">Watch &amp; details →</span></div></div></div>';
+  var c = [[!!h.name, 'Name'], [nv > 0, 'At least one video'], [!h.videos.some(function (v) { return v.uploading; }), 'Uploads finished'], [!!h.photo, 'Main photo (recommended)'], [!!h.summary, 'One-line summary'], [h.price_display === 'request' || !!h.price, 'Price, or "on request"']];
+  $('#checklist').innerHTML = '<b style="font-weight:600">Before publishing</b><br>' + c.map(function (x) { return x[0] ? '✓ ' + x[1] : '<span class="no">○ ' + x[1] + '</span>'; }).join('<br>');
+}
+
+function persist(kind) {
+  if (!cur.name) { toast('Give the horse a name first.', true); return; }
+  if (cur.videos.some(function (v) { return v.uploading; })) { toast('Wait for uploads to finish, then try again.', true); return; }
+  ensureSlug();
+  if (kind === 'publish' && cur.status === 'draft') cur.status = 'available';
+  if (kind === 'draft') cur.status = 'draft';
+  if (!cur.listed) { var d = new Date(); cur.listed = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2); }
+  delete cur._new;
+  toast(kind === 'publish' ? 'Publishing ' + cur.name + '…' : 'Saving…', false, 0);
+  return saveHorses((kind === 'publish' ? 'Publish ' : 'Save draft: ') + cur.name + ' (' + stLabel(cur) + ')').then(function () {
+    renderList(); load(cur);
+    if (kind === 'publish') openM('<h3>' + esc(cur.name) + ' is published ✓</h3><p style="margin-top:10px">Your website is updating now. In about 1–2 minutes the sale page will be live at:</p><p style="margin-top:8px"><a class="link" target="_blank" href="/horses/' + cur.slug + '/">' + location.host + '/horses/' + cur.slug + '/</a></p><div class="btnrow" style="margin-top:16px"><button class="btn b1" onclick="closeM();document.getElementById(\'fbBtn\').click()">Create Facebook post →</button><button class="btn b2" style="color:var(--green)" onclick="closeM()">Done</button></div>');
+    else toast('Saved as a draft. It\'s hidden from the website ✓');
+  }, function (e) { toast(e.message === 'auth' ? 'Your key was refused. Sign in again.' : 'Couldn\'t save: ' + e.message, true, 8000); });
+}
+$('#pub').onclick = function () { persist('publish'); };
+$('#saveBtn').onclick = function () { persist('draft'); };
+$('#newBtn').onclick = function () { load(newHorse()); window.scrollTo(0, 0); };
+$('#delBtn').onclick = function (e) {
+  e.preventDefault();
+  if (!confirm('Delete ' + (cur.name || 'this listing') + ' from the website? (If it sold, set Status to Sold instead so it moves to Graduates.)')) return;
+  var wasNew = cur._new; all.splice(all.indexOf(cur), 1);
+  if (wasNew) { load(all[0] || newHorse()); return; }
+  toast('Deleting…', false, 0);
+  saveHorses('Delete listing').then(function () { toast('Deleted ✓'); load(all[0] || newHorse()); }, function (er) { toast('Couldn\'t delete: ' + er.message, true, 8000); });
+};
+
+function openM(html) { $('#mbody').innerHTML = html; $('#modal').classList.add('show'); }
+function closeM() { $('#modal').classList.remove('show'); }
+$('#modal').onclick = function (e) { if (e.target.id === 'modal') closeM(); };
+$('#fbBtn').onclick = function () {
+  var h = cur, url = location.origin + '/horses/' + (h.slug || slug(h.name)) + '/', nv = h.videos.length;
+  var cap = 'Meet ' + (h.name || 'our newest horse') + '! 🐴 ' + (h.year ? h.year + ' ' : '') + h.breeding.replace(/½ /g, '').replace(/¼ |¾ /g, '').replace(' · ', ' × ') + ' ' + h.sex.toLowerCase() + (h.height ? ', ' + h.height : '') + '.' +
+    (h.summary ? '\n\n' + h.summary : '') + (h.training.length ? '\n\n✓ ' + h.training.slice(0, 4).join('\n✓ ') : '') + '\n\n' + (nv > 1 ? 'Watch all ' + nv + ' videos' : 'Watch the video') + ' and get the details on our website 👇\n' + url;
+  openM('<h3>Facebook post</h3><p class="muted" style="font-size:13.5px;margin-top:4px">Edit the caption, copy it, then post it on the Oak Creek page. Facebook shows the main photo and link automatically.</p>' +
+    '<textarea id="cap" rows="9" style="margin-top:14px;font-size:14px">' + esc(cap) + '</textarea>' +
+    '<div class="btnrow" style="margin-top:14px"><button class="btn b1" id="cp">Copy caption</button><a class="btn b2" style="color:var(--green)" href="https://www.facebook.com/" target="_blank" rel="noopener">Open Facebook ↗</a></div>' +
+    '<p class="muted" style="font-size:12.5px;margin-top:14px">Post on the business page, not Marketplace or buy-and-sell groups: Facebook removes animal-sale listings there.</p>');
+  $('#cp').onclick = function () { navigator.clipboard && navigator.clipboard.writeText($('#cap').value); this.textContent = 'Copied ✓'; };
+};
+window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+try { KEY = localStorage.getItem('oc-key') || sessionStorage.getItem('oc-key') || ''; } catch (x) {}
+if (KEY) start(); else showLogin();
+</script></body></html>

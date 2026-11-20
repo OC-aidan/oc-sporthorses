@@ -1,0 +1,103 @@
+{
+  "name": "Oak Creek Sport Horses",
+  "owner": "Aidan Green",
+  "tagline": "Exceptional Clydesdale × Thoroughbred sport horses, raised on the open pastures of Canada.",
+  "headline": "Bred with patience. Developed with purpose.",
+  "preview_banner": "Preview site · horses and text shown are samples",
+  "email": "AidanGreen@oakcreekthoroughbreds.com",
+  "phone": "501-385-2249",
+  "location": "Canada",
+  "facebook_url": "",
+  "instagram_url": "",
+  "youtube_url": "",
+  "hero_video": "assets/video/hero.mp4",
+  "hero_poster": "assets/img/hero.jpg",
+  "currency_default": "CAD",
+  "story_short": "Aidan's story goes here: the family ranch in Canada, why she breeds this cross, foaling on pasture and how each horse is started. Written in her own words.",
+  "story_long": [
+    "This page tells the Oak Creek story in Aidan's own words: where the ranch is, how it started, and why she chose the Clydesdale × Thoroughbred cross.",
+    "Our foals are born and raised on open pasture and grow up in a herd, where they learn manners, balance and confidence long before anyone sits on them.",
+    "Every horse is started slowly and given real-world miles (trails, water, trailers and show grounds) so the horse you watch on video is the horse that steps off the trailer."
+  ],
+  "buying": [
+    [
+      "Pre-purchase exams welcome",
+      "Bring your vet or use ours. We are happy to help arrange it."
+    ],
+    [
+      "Live video call viewings",
+      "See the horse move, tack up and ride, from anywhere."
+    ],
+    [
+      "Visits by appointment",
+      "Come meet the herd. Book a time that works for you."
+    ],
+    [
+      "Transport help",
+      "We can recommend haulers and walk you through the paperwork, including border crossings."
+    ],
+    [
+      "Deposit to hold",
+      "Aidan's deposit and hold policy goes here."
+    ],
+    [
+      "Stay in touch",
+      "Send us updates. Our graduates are the best part of what we do."
+    ]
+  ],
+  "steps": [
+    [
+      "Foal",
+      "Born on pasture",
+      "assets/video/ptp-foal.mp4"
+    ],
+    [
+      "Yearling",
+      "Herd life & handling",
+      "assets/video/ptp-yearling.mp4"
+    ],
+    [
+      "Two-year-old",
+      "Started under saddle",
+      "assets/video/ptp-two.mp4"
+    ],
+    [
+      "Partner",
+      "Trail, water, arena",
+      "assets/video/ptp-partner.mp4"
+    ]
+  ],
+  "graduates": [
+    {
+      "name": "Graduate name",
+      "home": "New home, province or state",
+      "discipline": "Discipline",
+      "note": "A line from the new owner goes here.",
+      "photo": "assets/img/grad-1.jpg"
+    },
+    {
+      "name": "Graduate name",
+      "home": "New home, province or state",
+      "discipline": "Discipline",
+      "note": "A line from the new owner goes here.",
+      "photo": "assets/img/grad-2.jpg"
+    },
+    {
+      "name": "Graduate name",
+      "home": "New home, province or state",
+      "discipline": "Discipline",
+      "note": "A line from the new owner goes here.",
+      "photo": "assets/img/grad-3.jpg"
+    },
+    {
+      "name": "Graduate name",
+      "home": "New home, province or state",
+      "discipline": "Discipline",
+      "note": "A line from the new owner goes here.",
+      "photo": "assets/img/grad-4.jpg"
+    }
+  ],
+  "repo": "OC-aidan/oc-sporthorses",
+  "branch": "main",
+  "site_url": "https://oak-creek-sport-horses.vercel.app"
+}

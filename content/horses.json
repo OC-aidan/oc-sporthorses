@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "juniper", "name": "Juniper", "sample": true, "status": "available", "featured": true,
+    "year": 2024, "sex": "Gelding", "breeding": "½ Clydesdale · ½ Thoroughbred",
+    "height": "15.3 hh", "mature_height": "~16.2 hh", "training_time": "4 months riding",
+    "disciplines": ["English", "Western", "Trail"],
+    "price": 15000, "currency": "CAD", "price_display": "price",
+    "summary": "An athletic, versatile young prospect with a thoughtful start, real-world experience, and an exciting future ahead.",
+    "notes": "Aidan's notes go here: personality, what he's like to handle, what kind of rider he would suit, and what she would do with him next.",
+    "training": ["Trail riding", "Water crossings", "Horse show exposure", "English & Western riding", "Loads & ties", "Good for farrier"],
+    "sire": "Sire name (Clydesdale)", "dam": "Dam name (Thoroughbred)",
+    "photo": "assets/img/horses/juniper.jpg",
+    "videos": [
+      {"chapter": "Under saddle", "title": "Walk, trot, canter", "duration": "2:10", "src": "", "youtube": "", "vimeo": ""},
+      {"chapter": "Trail & water", "title": "Trail ride & water crossing", "duration": "1:05", "src": "", "youtube": "", "vimeo": ""},
+      {"chapter": "Conformation", "title": "Standing & walking away", "duration": "0:48", "src": "", "youtube": "", "vimeo": ""},
+      {"chapter": "Ground work", "title": "Leading, loading, farrier", "duration": "1:32", "src": "", "youtube": "", "vimeo": ""}
+    ],
+    "listed": "2026-11"
+  },
+  {
+    "slug": "clover", "name": "Clover", "sample": true, "status": "under-offer", "featured": true,
+    "year": 2023, "sex": "Mare", "breeding": "½ Clydesdale · ½ Thoroughbred",
+    "height": "16.1 hh", "mature_height": "", "training_time": "10 months riding",
+    "disciplines": ["English", "Trail"],
+    "price": 18500, "currency": "CAD", "price_display": "price",
+    "summary": "A kind, forward mare with a lovely canter and lots of trail miles.",
+    "notes": "Aidan's notes go here.",
+    "training": ["Trail riding", "Water crossings", "Horse show exposure", "Loads & ties", "Good for farrier", "Clipped"],
+    "sire": "Sire name (Clydesdale)", "dam": "Dam name (Thoroughbred)",
+    "photo": "assets/img/horses/clover.jpg",
+    "videos": [
+      {"chapter": "Under saddle", "title": "Flatwork", "duration": "2:40", "src": "", "youtube": "", "vimeo": ""},
+      {"chapter": "Trail & water", "title": "Out on the trail", "duration": "1:20", "src": "", "youtube": "", "vimeo": ""},
+      {"chapter": "Conformation", "title": "Standing & moving", "duration": "0:55", "src": "", "youtube": "", "vimeo": ""}
+    ],
+    "listed": "2026-10"
+  },
+  {
+    "slug": "bramble", "name": "Bramble", "sample": true, "status": "available", "featured": true,
+    "year": 2024, "sex": "Gelding", "breeding": "½ Clydesdale · ½ Thoroughbred",
+    "height": "15.2 hh", "mature_height": "~16.1 hh", "training_time": "Started under saddle",
+    "disciplines": ["English", "Western"],
+    "price": 0, "currency": "CAD", "price_display": "request",
+    "summary": "A big-boned, easygoing youngster at the start of his education.",
+    "notes": "Aidan's notes go here.",
+    "training": ["Loads & ties", "Good for farrier", "Ponied", "Horse show exposure"],
+    "sire": "Sire name (Clydesdale)", "dam": "Dam name (Thoroughbred)",
+    "photo": "assets/img/horses/bramble.jpg",
+    "videos": [
+      {"chapter": "Ground work", "title": "Lunging & handling", "duration": "1:45", "src": "", "youtube": "", "vimeo": ""},
+      {"chapter": "Conformation", "title": "Standing & moving", "duration": "0:50", "src": "", "youtube": "", "vimeo": ""}
+    ],
+    "listed": "2026-11"
+  }
+]
