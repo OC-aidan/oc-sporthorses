@@ -211,7 +211,7 @@ $('#keyIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') $(
 $('#signout').onclick = function (e) { e.preventDefault(); try { localStorage.removeItem('oc-key'); sessionStorage.removeItem('oc-key'); } catch (x) {} KEY = ''; showLogin(); };
 
 // ---------- editor ----------
-function newHorse() { return {slug:'', name:'', year:new Date().getFullYear() - 2, sex:'Gelding', breeding:'½ Clydesdale · ½ Thoroughbred', height:'', mature_height:'', training_time:'', disciplines:[], price:'', currency:'CAD', price_display:'price', status:'available', featured:true, summary:'', notes:'', training:[], sire:'', dam:'', photo:'', videos:[], _new:true}; }
+function newHorse() { return {slug:'', name:'', year:new Date().getFullYear() - 2, sex:'Gelding', breeding:'½ Clydesdale · ½ Thoroughbred', height:'', mature_height:'', training_time:'', disciplines:[], price:'', currency:'CAD', price_display:'price', status:'draft', featured:true, summary:'', notes:'', training:[], sire:'', dam:'', photo:'', videos:[], _new:true}; }
 function stLabel(h) { return h.status === 'draft' ? 'Draft' : h.status === 'under-offer' ? 'Under offer' : h.status === 'sold' ? 'Sold' : 'Available'; }
 function renderList() {
   $('#hlist').innerHTML = all.map(function (h, i) { return '<div class="item' + (cur === h ? ' on' : '') + '" data-i="' + i + '"><span>' + esc(h.name || 'New horse') + '</span><span class="chip st-' + (h.status === 'draft' ? 'sold' : h.status) + '" style="font-size:10.5px">' + stLabel(h) + '</span></div>'; }).join('');
