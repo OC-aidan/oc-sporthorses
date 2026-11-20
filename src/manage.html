@@ -69,15 +69,7 @@
 <div>
 <div style="margin-bottom:18px"><h1 style="font-size:38px" id="formTitle">List a horse</h1><div class="muted">Fill in the form and press Publish. The sale page, homepage card and Facebook post build themselves.</div></div>
 
-<div class="stepc"><div class="h"><span class="n">1</span><div><b>Videos</b><div class="muted" style="font-size:13px">Paste a Vimeo link (best for riding videos) or upload a short clip from your phone.</div></div></div>
-<div class="two" style="margin-top:0">
-<div class="linkbox"><b style="font-weight:600;font-size:14px">Paste a Vimeo link</b><input id="vlink" placeholder="https://vimeo.com/123456789" style="margin-top:8px">
-<div class="btnrow"><button class="btn b1" style="padding:9px 14px" id="addLink">Add video</button><a class="btn b2" style="padding:9px 14px;color:var(--green)" href="https://vimeo.com/upload" target="_blank" rel="noopener">Upload to Vimeo ↗</a></div>
-<div class="muted" style="font-size:12px;margin-top:8px">On Vimeo, set privacy to <b>Unlisted</b> or <b>Hide from Vimeo</b> and allow embedding, then copy the link here.</div></div>
-<label class="drop"><input type="file" id="vfile" accept="video/mp4,video/quicktime,video/*" multiple hidden><div style="font-size:24px;color:var(--gold)">⬆</div><b style="font-weight:600">Upload a clip from your phone</b><div class="muted" style="font-size:12.5px;margin-top:4px">MP4 or MOV, up to 24 MB (about 20–40 seconds). Longer videos go on Vimeo.</div></label></div>
-<div id="vrows" style="margin-top:14px"></div></div>
-
-<div class="stepc"><div class="h"><span class="n">2</span><div><b>The horse</b><div class="muted" style="font-size:13px">The basics buyers look for first.</div></div></div>
+<div class="stepc"><div class="h"><span class="n">1</span><div><b>The horse</b><div class="muted" style="font-size:13px">The basics buyers look for first.</div></div></div>
 <div class="photo"><div class="ph" id="photoPrev" style="--ar:4/3"></div><div><b style="font-weight:600;font-size:14px">Main photo</b><div class="muted" style="font-size:12.5px">Side-on, standing square. Used on cards and Facebook link previews.</div>
 <label class="btn b2" style="margin-top:10px;padding:9px 14px;color:var(--green);cursor:pointer"><input type="file" id="pfile" accept="image/*" hidden>Upload photo</label><div class="prog" id="pprog" style="display:none"><i></i></div></div></div>
 <div class="g3" style="margin-top:6px"><div><label class="f">Barn name</label><input data-k="name"></div><div><label class="f">Year foaled</label><input data-k="year" type="number"></div>
@@ -87,25 +79,34 @@
 <div><label class="f">Sire</label><input data-k="sire"></div><div><label class="f">Dam</label><input data-k="dam"></div><div><label class="f">Time under saddle</label><input data-k="training_time" placeholder="4 months riding"></div></div>
 <label class="f">Disciplines</label><div id="disc"></div></div>
 
-<div class="stepc"><div class="h"><span class="n">3</span><div><b>Training &amp; story</b><div class="muted" style="font-size:13px">Tick what the horse has done, then write a few lines in your own voice.</div></div></div>
+<div class="stepc"><div class="h"><span class="n">2</span><div><b>Training &amp; story</b><div class="muted" style="font-size:13px">Tick what the horse has done, then write a few lines in your own voice.</div></div></div>
 <div class="g3" id="train"></div><div style="display:flex;gap:8px;margin-top:8px"><input id="ownTrain" placeholder="Add your own (e.g. Hacks out alone)" style="max-width:320px"><button class="btn b2" style="padding:8px 14px;color:var(--green)" id="addTrain">Add</button></div>
 <label class="f">One-line summary (shown on cards and Facebook)</label><input data-k="summary">
 <label class="f">About this horse</label><textarea data-k="notes" rows="4"></textarea></div>
 
-<div class="stepc"><div class="h"><span class="n">4</span><div><b>Price &amp; status</b><div class="muted" style="font-size:13px">Set the price, how it shows, and where the listing appears.</div></div></div>
+<div class="stepc"><div class="h"><span class="n">3</span><div><b>Price &amp; status</b><div class="muted" style="font-size:13px">Set the price, how it shows, and where the listing appears.</div></div></div>
 <div class="two" style="margin-top:0;gap:24px"><div><label class="f" style="margin-top:0">Asking price</label><input data-k="price" type="number" placeholder="15000">
 <div style="display:flex;gap:6px;margin-top:10px" id="cur"></div><div id="maxwrap" style="display:none"><label class="f">Up to (for a range)</label><input data-k="price_max" type="number"></div></div>
 <div><label class="f" style="margin-top:0">How to show the price</label>
 <label class="radio"><input type="radio" name="pd" value="price">Show the price</label><label class="radio"><input type="radio" name="pd" value="range">Show a range</label><label class="radio"><input type="radio" name="pd" value="request">Hide it: "Price on request"</label></div></div>
-<label class="f">Status</label><div id="status"></div>
+<label class="f">Status</label><div id="status"></div><div id="draftNote" class="muted" style="font-size:12.5px;display:none">This listing is a <b>draft</b>, hidden from the website. Pick a status and press Publish to put it live.</div>
 <label class="cbx"><input type="checkbox" data-k="featured">Feature on the homepage</label>
 <a href="#" class="danger" id="delBtn">Delete this listing</a></div>
+<div class="stepc"><div class="h"><span class="n">4</span><div><b>Videos</b><div class="muted" style="font-size:13px">Paste a Vimeo link (best for riding videos) or upload a short clip from your phone.</div></div></div>
+<div class="two" style="margin-top:0">
+<div class="linkbox"><b style="font-weight:600;font-size:14px">Paste a Vimeo link</b><input id="vlink" placeholder="https://vimeo.com/123456789" style="margin-top:8px">
+<div class="btnrow"><button class="btn b1" style="padding:9px 14px" id="addLink">Add video</button><a class="btn b2" style="padding:9px 14px;color:var(--green)" href="https://vimeo.com/upload" target="_blank" rel="noopener">Upload to Vimeo ↗</a></div>
+<div class="muted" style="font-size:12px;margin-top:8px">On Vimeo, set privacy to <b>Unlisted</b> or <b>Hide from Vimeo</b> and allow embedding, then copy the link here.</div></div>
+<label class="drop"><input type="file" id="vfile" accept="video/mp4,video/quicktime,video/*" multiple hidden><div style="font-size:24px;color:var(--gold)">⬆</div><b style="font-weight:600">Upload a clip from your phone</b><div class="muted" style="font-size:12.5px;margin-top:4px">MP4 or MOV, up to 24 MB (about 20–40 seconds). Longer videos go on Vimeo.</div></label></div>
+<div id="vrows" style="margin-top:14px"></div></div>
+
+
 </div>
 
 <div class="side"><div class="tag">Live preview</div><div id="preview"></div>
 <button class="btn b1 full" style="margin-top:16px;padding:15px" id="pub">Publish to website</button>
 <button class="btn b2 full" style="margin-top:10px;color:var(--green)" id="fbBtn">Create Facebook post →</button>
-<button class="btn full" style="margin-top:6px;color:var(--muted)" id="saveBtn">Save as draft (hidden)</button>
+<button class="btn full" style="margin-top:6px;color:var(--muted)" id="saveBtn">Save as draft (hidden from site)</button>
 <div class="check" id="checklist"></div>
 <p class="muted" style="font-size:12px;margin-top:12px">Published changes appear on the website in about 1–2 minutes.</p></div>
 </div></div>
@@ -119,7 +120,7 @@ var MAX_UPLOAD = 24 * 1024 * 1024;
 var DISC = ['English','Western','Trail','Hunter','Dressage','Jumping','Eventing','Driving'];
 var TRAIN = ['Trail riding','Water crossings','Horse show exposure','English & Western riding','Loads & ties','Good for farrier','Clipped','Ponied','Bathes','Hacks out alone','Started over fences','Kid safe'];
 var CHAP = ['Under saddle','Trail & water','Conformation','Ground work','Turnout','Other'];
-var ST = {available:'Available','under-offer':'Under offer',sold:'Sold → moves to Graduates',draft:'Draft (hidden)'};
+var ST = {available:'Available','under-offer':'Under offer',sold:'Sold → moves to Graduates'};
 var KEY = '', all = [], fileSha = null, cur = null, dirty = false;
 
 function $(s) { return document.querySelector(s); }
@@ -210,7 +211,7 @@ $('#keyIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') $(
 $('#signout').onclick = function (e) { e.preventDefault(); try { localStorage.removeItem('oc-key'); sessionStorage.removeItem('oc-key'); } catch (x) {} KEY = ''; showLogin(); };
 
 // ---------- editor ----------
-function newHorse() { return {slug:'', name:'', year:new Date().getFullYear() - 2, sex:'Gelding', breeding:'½ Clydesdale · ½ Thoroughbred', height:'', mature_height:'', training_time:'', disciplines:[], price:'', currency:'CAD', price_display:'price', status:'draft', featured:true, summary:'', notes:'', training:[], sire:'', dam:'', photo:'', videos:[], _new:true}; }
+function newHorse() { return {slug:'', name:'', year:new Date().getFullYear() - 2, sex:'Gelding', breeding:'½ Clydesdale · ½ Thoroughbred', height:'', mature_height:'', training_time:'', disciplines:[], price:'', currency:'CAD', price_display:'price', status:'available', featured:true, summary:'', notes:'', training:[], sire:'', dam:'', photo:'', videos:[], _new:true}; }
 function stLabel(h) { return h.status === 'draft' ? 'Draft' : h.status === 'under-offer' ? 'Under offer' : h.status === 'sold' ? 'Sold' : 'Available'; }
 function renderList() {
   $('#hlist').innerHTML = all.map(function (h, i) { return '<div class="item' + (cur === h ? ' on' : '') + '" data-i="' + i + '"><span>' + esc(h.name || 'New horse') + '</span><span class="chip st-' + (h.status === 'draft' ? 'sold' : h.status) + '" style="font-size:10.5px">' + stLabel(h) + '</span></div>'; }).join('');
@@ -228,6 +229,7 @@ function load(h) {
   pills('#status', Object.keys(ST), function () { return [cur.status]; }, function (x) { cur.status = x; }, ST);
   renderTrain(); renderVideos(); renderPhoto(); update();
 }
+function draftNote() { $('#draftNote').style.display = cur.status === 'draft' ? '' : 'none'; }
 function toggle(arr, x) { var i = arr.indexOf(x); i < 0 ? arr.push(x) : arr.splice(i, 1); }
 function pills(sel, opts, onFn, fn, labels) {
   var box = $(sel), on = onFn();
@@ -300,6 +302,7 @@ document.querySelectorAll('[data-k]').forEach(function (el) {
 document.querySelectorAll('input[name=pd]').forEach(function (r) { r.onchange = function () { cur.price_display = r.value; dirty = true; update(); }; });
 
 function update() {
+  draftNote();
   var h = cur, nv = h.videos.length, v0 = h.videos[0] || {};
   $('#maxwrap').style.display = h.price_display === 'range' ? '' : 'none';
   var st = h.status === 'draft' ? 'sold' : h.status;
@@ -314,8 +317,8 @@ function persist(kind) {
   if (!cur.name) { toast('Give the horse a name first.', true); return; }
   if (cur.videos.some(function (v) { return v.uploading; })) { toast('Wait for uploads to finish, then try again.', true); return; }
   ensureSlug();
-  if (kind === 'publish' && cur.status === 'draft') cur.status = 'available';
-  if (kind === 'draft') cur.status = 'draft';
+  if (kind === 'publish' && cur.status === 'draft') cur.status = cur._was || 'available';
+  if (kind === 'draft' && cur.status !== 'draft') { cur._was = cur.status; cur.status = 'draft'; }
   if (!cur.listed) { var d = new Date(); cur.listed = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2); }
   delete cur._new;
   toast(kind === 'publish' ? 'Publishing ' + cur.name + '…' : 'Saving…', false, 0);
