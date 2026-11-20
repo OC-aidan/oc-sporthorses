@@ -64,7 +64,28 @@ The key lets the Horse Manager save to her website and nothing else. Create it w
    test horse and **Delete this listing**.
 4. Do the same on her computer if she'll use both.
 
-## Step 8. Her own web address (optional, recommended)
+## Step 8. Connect the website forms to her email
+Inquiries, visit requests and "see new horses first" signups are emailed to AidanGreen@oakcreekthoroughbreds.com,
+sent from her own Gmail. Hitting **Reply** answers the buyer directly when they left an email address.
+Do this signed in to Google as Aidan.
+1. Go to **script.google.com → New project**. Rename it (top left) to `Oak Creek website forms`.
+2. Delete what's in the editor, then paste in the whole file
+   [`apps-script/Code.gs`](https://github.com/OC-aidan/oc-sporthorses/blob/main/apps-script/Code.gs) and click **Save** (disk icon).
+3. Send a test: in the function menu at the top choose **sendTestEmail → Run**. Google asks for permission:
+   **Review permissions** → pick her account → **Advanced → Go to Oak Creek website forms (unsafe)** → **Allow**.
+   (Google says "unsafe" for any script you wrote yourself; this one only sends email to her.) Check her inbox for the test.
+4. **Deploy → New deployment** → gear icon → **Web app**:
+   - Description: `website forms`
+   - Execute as: **Me**
+   - Who has access: **Anyone**
+   Click **Deploy** and copy the **Web app URL** (ends in `/exec`).
+5. Send Claude the URL, or put it in `content/site.json` as `"form_endpoint": "<the URL>"` and commit.
+6. Test on the live site: send an inquiry from a horse page and check it arrives.
+
+If you ever change the script, use **Deploy → Manage deployments → edit (pencil) → Version: New version → Deploy**
+so the URL stays the same.
+
+## Step 9. Her own web address (optional, recommended)
 1. In Cloudflare: **Workers & Pages → oc-sporthorses → Custom domains → Set up a custom domain**.
 2. Enter the domain (e.g. `oakcreeksporthorses.com` or `www.oakcreekthoroughbreds.com`) and follow the
    prompts. Cloudflare explains which DNS records to add at the domain registrar, or offers to manage the
@@ -72,12 +93,11 @@ The key lets the Horse Manager save to her website and nothing else. Create it w
 3. After it's connected, the Horse Manager is at `<her-domain>/manage/`.
 4. Update `"site_url"` in `content/site.json` to the new address (e.g. `https://oakcreeksporthorses.com`) so Facebook link previews point to it. Also do this right after Step 5 with the `pages.dev` address.
 
-## Step 9. Bryan: tidy up
+## Step 10. Bryan: tidy up
 1. Delete the old Vercel project (**vercel.com → oc-sporthorses → Settings → Delete**).
    Vercel's free plan doesn't allow business sites, and Cloudflare replaces it.
 2. When her real horses, photos and story are in, remove the "Preview site" banner: set
    `"preview_banner": ""` in `content/site.json` (or ask Claude).
-3. Still to connect: the inquiry forms to her email, and the "see new horses first" list.
 
 ---
 

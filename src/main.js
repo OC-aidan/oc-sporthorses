@@ -1,17 +1,23 @@
 // Oak Creek Sport Horses · site behaviour
 (function () {
-  // Forms: until a form service is connected, show the thank-you message.
-  // To connect: set FORM_ENDPOINT (e.g. a Formspree URL) and submissions are POSTed there.
-  var FORM_ENDPOINT = '';
+  // Forms: sent to Aidan's Google Apps Script (emails her Gmail + logs to a Google Sheet).
+  // The address comes from "form_endpoint" in content/site.json. Empty = show the thank-you only.
+  var FORM_ENDPOINT = window.FORM_ENDPOINT || '';
   document.querySelectorAll('form[data-form]').forEach(function (f) {
     f.addEventListener('submit', function (ev) {
       ev.preventDefault();
-      var ok = f.querySelector('.ok');
+      var ok = f.querySelector('.ok'), btn = f.querySelector('button');
       var done = function () { if (ok) ok.classList.add('show'); f.querySelectorAll('input:not([type=hidden]),textarea,select,button').forEach(function (el) { el.disabled = true; }); };
       if (!FORM_ENDPOINT) return done();
-      var data = new FormData(f); data.append('form', f.dataset.form);
-      f.querySelectorAll('input,textarea,select').forEach(function (el, i) { if (!el.name) data.append('field' + i, el.value); });
-      fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } }).then(done, done);
+      var data = new URLSearchParams();
+      data.append('form', f.dataset.form); data.append('page', location.href.split('#')[0]);
+      f.querySelectorAll('input[name],textarea[name],select[name]').forEach(function (el) { data.append(el.name, el.value); });
+      if (btn) { btn.disabled = true; btn.dataset.t = btn.textContent; btn.textContent = 'Sending…'; }
+      // Apps Script answers through a redirect without CORS headers, so the reply can't be read: no-cors, then thank.
+      fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', body: data }).then(done, function () {
+        if (btn) { btn.disabled = false; btn.textContent = btn.dataset.t; }
+        alert('Sorry, that didn\'t send. Please check your connection and try again, or email us directly.');
+      });
     });
   });
 

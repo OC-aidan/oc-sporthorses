@@ -107,12 +107,12 @@ def page(title, body, pre='', over=False, on='', desc='', og_img='', path=''):
 <div><b>Visit</b><a href="{pre}visit/">Book a visit</a><a href="{pre}visit/#call">Video call viewing</a><a href="{pre}story/#buying">Buying from us</a></div>
 <div><b>Follow</b><a href="{S['facebook_url'] or '#'}">Facebook</a><a href="{S['instagram_url'] or '#'}">Instagram</a><a href="{S['youtube_url'] or '#'}">YouTube</a></div></div>
 <div class="small"><span>© 2026 {e(S['name'])} · {e(S['location'])}</span><a class="owner" href="{pre}manage/" rel="nofollow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Owner sign-in</a></div></div></footer>
-<script src="{pre}assets/main.js"></script></body></html>'''
+<script>window.FORM_ENDPOINT={json.dumps(S.get('form_endpoint', ''))};</script><script src="{pre}assets/main.js"></script></body></html>'''
 
 def signup():
     return '''<section style="padding-bottom:0"><div class="wrap"><div class="signup"><div><h2 style="font-size:34px">See new horses first</h2>
 <p class="muted" style="margin-top:6px">Get a text or email the day a new horse is listed, before it's shared anywhere else.</p></div>
-<form data-form="firstlook"><input required placeholder="Email or mobile number" aria-label="Email or mobile number"><button class="btn b1">Notify me</button>
+<form data-form="firstlook"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px"><input required name="contact" placeholder="Email or mobile number" aria-label="Email or mobile number"><button class="btn b1">Notify me</button>
 <div class="ok" style="width:100%">You're on the list. We'll let you know when the next horse is listed.</div></form></div></div></section>'''
 
 def home():
@@ -212,8 +212,8 @@ def horse_page(h):
 <a class="btn b2 full" style="margin-top:10px;color:var(--green)" href="{pre}visit/?horse={h['slug']}">Book a visit or video call</a>
 <div class="share"><button data-share="fb">Share on Facebook</button><button data-share="copy">Copy link</button></div></div>
 <div class="card" id="ask" style="padding:22px;margin-top:16px"><b style="font-weight:600">Ask about {e(h['name'])}</b>
-<form data-form="inquiry"><input type="hidden" name="horse" value="{e(h['name'])}"><input required placeholder="Name" style="margin-top:12px"><input required placeholder="Email or phone" style="margin-top:8px">
-<textarea rows="3" style="margin-top:8px">Hi Aidan, I'm interested in {e(h['name'])}. </textarea><button class="btn b2" style="margin-top:10px;color:var(--green)">Send</button>
+<form data-form="inquiry"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px"><input type="hidden" name="horse" value="{e(h['name'])}"><input required name="name" placeholder="Name" style="margin-top:12px"><input required name="contact" placeholder="Email or phone" style="margin-top:8px">
+<textarea name="message" rows="3" style="margin-top:8px">Hi Aidan, I'm interested in {e(h['name'])}. </textarea><button class="btn b2" style="margin-top:10px;color:var(--green)">Send</button>
 <div class="ok">Thanks! Aidan will get back to you about {e(h['name'])} soon.</div></form></div></aside></div>
 <section style="padding-bottom:0"><h2>You might also like</h2><div class="grid3" style="margin-top:24px">{''.join(hcard(x, i + 30, pre) for i, x in enumerate(others))}</div></section></div>
 <script>window.VIDEOS={data};window.FB_CAPTION={json.dumps(fb_cap)};</script>'''
@@ -255,10 +255,10 @@ def visit():
 <div class="tile" style="background:var(--surf);padding:18px"><div class="v">Visit the ranch</div><div class="muted" style="font-size:14px">{e(S['location'])}. Directions sent when you book.</div></div></div>
 <p style="margin-top:24px">{' · '.join(contact) if contact else '<span class="muted">Email and phone go here.</span>'}</p>
 <div style="margin-top:26px">{media('assets/img/visit.jpg', 'Photo · the ranch', '16/10', seed=2, pre=pre)}</div></div>
-<div class="formcard"><h3>Send an inquiry</h3><form data-form="visit"><div class="grid2"><div><label class="f">Name</label><input required></div><div><label class="f">Email or phone</label><input required></div></div>
+<div class="formcard"><h3>Send an inquiry</h3><form data-form="visit"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px"><div class="grid2"><div><label class="f">Name</label><input required name="name"></div><div><label class="f">Email or phone</label><input required name="contact"></div></div>
 <label class="f">Which horse?</label><select name="horse" id="horse-select"><option value="">General inquiry</option>{opts}</select>
-<label class="f">I'd like to…</label><select><option>Ask a question</option><option>Book a visit</option><option>Book a video call</option></select>
-<label class="f">Message</label><textarea rows="5" placeholder="Tell us about yourself, your riding and what you're looking for."></textarea>
+<label class="f">I'd like to…</label><select name="request"><option>Ask a question</option><option>Book a visit</option><option>Book a video call</option></select>
+<label class="f">Message</label><textarea name="message" rows="5" placeholder="Tell us about yourself, your riding and what you're looking for."></textarea>
 <button class="btn b1 full" style="margin-top:16px">Send inquiry</button><div class="ok">Thank you! Aidan will be in touch shortly.</div></form></div></div></section>'''
     return page(f"Visit & Inquire · {S['name']}", body, pre, on='visit/')
 

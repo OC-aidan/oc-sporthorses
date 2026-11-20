@@ -22,9 +22,7 @@ Recommended host: Cloudflare Pages (free for business use). See **SETUP.md** for
 python3 build.py && python3 -m http.server -d public 8000
 ```
 
-## Not wired yet
-1. **Forms**: inquiry, visit and first-look forms show a thank-you but don't send. Set `FORM_ENDPOINT` in
-   `src/main.js` (e.g. Formspree, free tier) to deliver them to AidanGreen@oakcreekthoroughbreds.com.
-2. **First-look texts/emails**: connect the signup form to Mailchimp or Flodesk.
-3. **Domain**: add it in Cloudflare Pages → Custom domains.
-4. **Facebook**: post on her business page (not Marketplace or buy-and-sell groups, which remove animal sales).
+## Forms
+Inquiry, visit and first-look forms POST to a Google Apps Script web app in Aidan's account
+(`apps-script/Code.gs`), which emails her Gmail. Its URL goes in `content/site.json` → `form_endpoint`
+(empty = forms only show the thank-you). Setup: SETUP.md, step 8.
