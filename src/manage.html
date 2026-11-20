@@ -89,7 +89,7 @@
 <div style="display:flex;gap:6px;margin-top:10px" id="cur"></div><div id="maxwrap" style="display:none"><label class="f">Up to (for a range)</label><input data-k="price_max" type="number"></div></div>
 <div><label class="f" style="margin-top:0">How to show the price</label>
 <label class="radio"><input type="radio" name="pd" value="price">Show the price</label><label class="radio"><input type="radio" name="pd" value="range">Show a range</label><label class="radio"><input type="radio" name="pd" value="request">Hide it: "Price on request"</label></div></div>
-<label class="f">Status</label><div id="status"></div><div id="draftNote" class="muted" style="font-size:12.5px;display:none">This listing is a <b>draft</b>, hidden from the website. Pick a status and press Publish to put it live.</div>
+<label class="f">Status</label><div id="status"></div><div id="draftNote" class="muted" style="font-size:12.5px;display:none">This listing is a <b>draft</b>, hidden from the website. Pick a status and press Publish to put it live.</div><div id="archNote" class="muted" style="font-size:12.5px;display:none">Archived: hidden from the website (including Graduates) but kept here for your records. Pick another status and Publish to bring it back.</div>
 <label class="cbx"><input type="checkbox" data-k="featured">Feature on the homepage</label>
 <a href="#" class="danger" id="delBtn">Delete this listing</a></div>
 <div class="stepc"><div class="h"><span class="n">4</span><div><b>Videos</b><div class="muted" style="font-size:13px">Paste a Vimeo link (best for riding videos) or upload a short clip from your phone.</div></div></div>
@@ -120,7 +120,7 @@ var MAX_UPLOAD = 24 * 1024 * 1024;
 var DISC = ['English','Western','Trail','Hunter','Dressage','Jumping','Eventing','Driving'];
 var TRAIN = ['Trail riding','Water crossings','Horse show exposure','English & Western riding','Loads & ties','Good for farrier','Clipped','Ponied','Bathes','Hacks out alone','Started over fences','Kid safe'];
 var CHAP = ['Under saddle','Trail & water','Conformation','Ground work','Turnout','Other'];
-var ST = {available:'Available','under-offer':'Under offer',sold:'Sold → moves to Graduates'};
+var ST = {available:'Available','under-offer':'Under offer',sold:'Sold → moves to Graduates',archived:'Archived (hidden)'};
 var KEY = '', all = [], fileSha = null, cur = null, dirty = false;
 
 function $(s) { return document.querySelector(s); }
@@ -212,9 +212,10 @@ $('#signout').onclick = function (e) { e.preventDefault(); try { localStorage.re
 
 // ---------- editor ----------
 function newHorse() { return {slug:'', name:'', year:new Date().getFullYear() - 2, sex:'Gelding', breeding:'½ Clydesdale · ½ Thoroughbred', height:'', mature_height:'', training_time:'', disciplines:[], price:'', currency:'CAD', price_display:'price', status:'draft', featured:true, summary:'', notes:'', training:[], sire:'', dam:'', photo:'', videos:[], _new:true}; }
-function stLabel(h) { return h.status === 'draft' ? 'Draft' : h.status === 'under-offer' ? 'Under offer' : h.status === 'sold' ? 'Sold' : 'Available'; }
+function stLabel(h) { return h.status === 'draft' ? 'Draft' : h.status === 'archived' ? 'Archived' : h.status === 'under-offer' ? 'Under offer' : h.status === 'sold' ? 'Sold' : 'Available'; }
 function renderList() {
-  $('#hlist').innerHTML = all.map(function (h, i) { return '<div class="item' + (cur === h ? ' on' : '') + '" data-i="' + i + '"><span>' + esc(h.name || 'New horse') + '</span><span class="chip st-' + (h.status === 'draft' ? 'sold' : h.status) + '" style="font-size:10.5px">' + stLabel(h) + '</span></div>'; }).join('');
+  var order = all.map(function (h, i) { return i; }).sort(function (a, b) { return (all[a].status === 'archived') - (all[b].status === 'archived') || a - b; });
+  $('#hlist').innerHTML = order.map(function (i) { var h = all[i]; return '<div class="item' + (cur === h ? ' on' : '') + '" data-i="' + i + '"><span>' + esc(h.name || 'New horse') + '</span><span class="chip st-' + (h.status === 'draft' ? 'sold' : h.status) + '" style="font-size:10.5px">' + stLabel(h) + '</span></div>'; }).join('');
   document.querySelectorAll('#hlist .item').forEach(function (el) { el.onclick = function () { load(all[+el.dataset.i]); }; });
 }
 function load(h) {
@@ -229,7 +230,7 @@ function load(h) {
   pills('#status', Object.keys(ST), function () { return [cur.status]; }, function (x) { cur.status = x; }, ST);
   renderTrain(); renderVideos(); renderPhoto(); update();
 }
-function draftNote() { $('#draftNote').style.display = cur.status === 'draft' ? '' : 'none'; }
+function draftNote() { $('#draftNote').style.display = cur.status === 'draft' ? '' : 'none'; $('#archNote').style.display = cur.status === 'archived' ? '' : 'none'; }
 function toggle(arr, x) { var i = arr.indexOf(x); i < 0 ? arr.push(x) : arr.splice(i, 1); }
 function pills(sel, opts, onFn, fn, labels) {
   var box = $(sel), on = onFn();
@@ -305,7 +306,7 @@ function update() {
   draftNote();
   var h = cur, nv = h.videos.length, v0 = h.videos[0] || {};
   $('#maxwrap').style.display = h.price_display === 'range' ? '' : 'none';
-  var st = h.status === 'draft' ? 'sold' : h.status;
+  var st = h.status === 'draft' || h.status === 'archived' ? 'sold' : h.status;
   var top = h.photo ? '<img src="' + esc(photoSrc(h)) + '">' : vthumb(v0);
   $('#preview').innerHTML = '<div class="card"><div class="ph" style="--ar:16/10;border-radius:0">' + top + '<span class="play sm"></span><span class="lab">▶ ' + nv + ' video' + (nv === 1 ? '' : 's') + '</span></div><div class="body"><div class="row-top"><span class="chip st-' + st + '">' + stLabel(h) + '</span>' + (h.featured ? '<span class="sample">★ Homepage</span>' : '') + '</div>' +
     '<h3>' + esc(h.name || 'Horse name') + '</h3><div class="meta">' + esc((h.year || '') + ' ' + h.sex + ' · ' + h.breeding + (h.height ? ' · ' + h.height : '')) + '</div><div class="spacer"></div><div class="foot"><span class="price">' + money(h) + (h.price && h.price_display !== 'request' ? ' <span class="muted" style="font-size:12px;font-weight:400">' + h.currency + '</span>' : '') + '</span><span class="link">Watch &amp; details →</span></div></div></div>';
@@ -333,7 +334,7 @@ $('#saveBtn').onclick = function () { persist('draft'); };
 $('#newBtn').onclick = function () { load(newHorse()); window.scrollTo(0, 0); };
 $('#delBtn').onclick = function (e) {
   e.preventDefault();
-  if (!confirm('Delete ' + (cur.name || 'this listing') + ' from the website? (If it sold, set Status to Sold instead so it moves to Graduates.)')) return;
+  if (!confirm('Delete ' + (cur.name || 'this listing') + ' from the website? (Tip: set Status to Sold to move it to Graduates, or Archived to hide it but keep the record.)')) return;
   var wasNew = cur._new; all.splice(all.indexOf(cur), 1);
   if (wasNew) { load(all[0] || newHorse()); return; }
   toast('Deleting…', false, 0);

@@ -90,7 +90,8 @@ The key lets the Horse Manager save to her website and nothing else. Create it w
 4. **Create Facebook post** writes the caption. Post it on the Oak Creek business page with the link
    (not Marketplace or buy-and-sell groups, which remove animal sales).
 5. **Sold:** set Status to **Sold**; the horse moves to the Graduates page automatically.
-6. **Not ready yet?** Use **Save as draft**; it stays off the website.
+6. **Not ready yet?** New horses start as drafts and stay off the website until she presses **Publish**.
+7. **Archived:** hides a horse from the website entirely (including Graduates) but keeps its record in the Horse Manager. Pick another status and Publish to bring it back.
 
 ## If something goes wrong
 | Problem | Fix |

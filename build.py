@@ -7,7 +7,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, 'public')
 S = json.load(open(os.path.join(ROOT, 'content/site.json')))
 ALL = json.load(open(os.path.join(ROOT, 'content/horses.json')))
-H = [h for h in ALL if h.get('status') in ('available', 'under-offer', 'sold')]  # drafts stay hidden
+H = [h for h in ALL if h.get('status') in ('available', 'under-offer', 'sold')]  # drafts and archived stay hidden
 e = html.escape
 STATUS = {'available': 'Available', 'under-offer': 'Under offer', 'sold': 'Sold'}
 
